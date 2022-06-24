@@ -6,14 +6,18 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate')
 const methodOverride = require('method-override');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
 const ExpressError = require('./utils/ExpressError');
 const catchAsync = require('./utils/catchAsync');
 
 const { campgroundSchema, reviewSchema } = require('./schemas');
 
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const campgroundsRoutes = require('./routes/campgrounds');
+const reviewsRoutes = require('./routes/reviews');
+const authRoutes = require('./routes/auth');
 
 // Connecting to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
@@ -45,15 +49,27 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash())
 
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
+    if (!['/login', '/register', '/'].includes(req.originalUrl)) {
+        req.session.returnTo = req.originalUrl;
+    }
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
 // Route handler
-app.use('/campgrounds', campgrounds)
-app.use('/campgrounds/:id/reviews', reviews)
+app.use('/campgrounds', campgroundsRoutes)
+app.use('/campgrounds/:id/reviews', reviewsRoutes)
+app.use('/', authRoutes)
 
 // Home Route
 app.get('/', (req, res) => {
