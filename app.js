@@ -17,7 +17,7 @@ const { campgroundSchema, reviewSchema } = require('./schemas');
 
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/usersAuth');
 
 // Connecting to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');

@@ -13,9 +13,6 @@ db.once('open', () => {
     console.log('Database Connected');
 });
 
-const imagesURL = 'https://api.unsplash.com/photos/random?client_id=-rCbaHRZIQbwnwVdkMrjBtFKOupuGb_bne-wEpEBmBk&collections=3846912'
-
-
 const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
@@ -23,18 +20,12 @@ const seedDB = async () => {
     for (let i = 0; i < 50; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
-        const image = axios.get(imagesURL)
-            .then(res => {
-                return res.data.urls.regular;
-            })
-            .catch(error => {
-                console.error(error);
-            });
         const newCamp = new Campground({
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam error, hic ea sint impedit nisi inventore odit repudiandae laborum quidem, molestias a sequi blanditiis. Asperiores et natus perferendis. Suscipit, sunt. Nam illum dolorum facere vitae.',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
-            image: 'https://images.unsplash.com/photo-1445998559126-132150395033?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMzY5MTJ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTUwMTk4OTA&ixlib=rb-1.2.1&q=80&w=1080',
+            author: '62b5ff4e85f8904b3060a665',
+            image: 'https://www.desktopbackground.org/p/2013/10/29/661606_natcher-wallpapers-free-download_1366x768_h.jpg',
             price
         })
 
