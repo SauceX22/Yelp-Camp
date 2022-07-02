@@ -25,7 +25,16 @@ const seedDB = async () => {
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam error, hic ea sint impedit nisi inventore odit repudiandae laborum quidem, molestias a sequi blanditiis. Asperiores et natus perferendis. Suscipit, sunt. Nam illum dolorum facere vitae.',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             author: '62b5ff4e85f8904b3060a665',
-            image: 'https://www.desktopbackground.org/p/2013/10/29/661606_natcher-wallpapers-free-download_1366x768_h.jpg',
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/dodydifbc/image/upload/v1656686722/YelpCamp/lcwvsyjrxhd6dqh2cmr0.jpg',
+                    filename: 'YelpCamp/lcwvsyjrxhd6dqh2cmr0'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dodydifbc/image/upload/v1656686722/YelpCamp/hk4txty0khp5x8pewv4j.jpg',
+                    filename: 'YelpCamp/hk4txty0khp5x8pewv4j'
+                }
+            ],
             price
         })
 

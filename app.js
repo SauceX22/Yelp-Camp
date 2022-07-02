@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const session = require('express-session')
 const flash = require('connect-flash')
@@ -9,11 +13,7 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
-
 const ExpressError = require('./utils/ExpressError');
-const catchAsync = require('./utils/catchAsync');
-
-const { campgroundSchema, reviewSchema } = require('./schemas');
 
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
@@ -87,6 +87,7 @@ app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Something went wrong!'
     res.status(statusCode).render('error', { err })
+    console.log(err)
 })
 
 app.listen(3000, () => {
